@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, TextInput, StyleSheet, Picker } from 'react-native'
 
+
 const FormPatient = (props) => {
      
     return (
@@ -19,7 +20,7 @@ const FormPatient = (props) => {
                <Picker.Item style={styles.sex} label = "Laki - laki" value = "Male" />
                <Picker.Item style={styles.sex} label = "Perempuan" value = "Female" />
             </Picker>
-            {/* <Text style = {styles.sex}>{props.sex}</Text> */}
+           
             
             <TouchableOpacity
                 style = {styles.submitButton}

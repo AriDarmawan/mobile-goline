@@ -8,7 +8,8 @@
 
 import React, {Component} from 'react';
 import FormPatient from './component/FormPatient';
-
+import Axios from 'axios';
+import FormData from 'form-data';
 
 export default class App extends Component {
   state = {
@@ -23,13 +24,20 @@ export default class App extends Component {
       this.setState({ sex: text })
   }  
 
+
+
+
   postData = () =>{
+    let dataParams = new FormData();
+    dataParams.append("patient_name", "ujang");
+    dataParams.append("sex", "Male");
+
     return fetch(`http://192.168.88.14:2000/patient`, {
       method: 'POST',
-      // headers: {
-      //   "Accept": 'application/json',
-      //   'Content-Type': 'application/json',
-      // },
+      headers: {
+        "Accept": 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
       body: JSON.stringify({
         patient_name: this.state.name, 
         sex: this.state.sex,
@@ -37,66 +45,18 @@ export default class App extends Component {
     });
   }
 
-  login = async () => { //const dataPatient = await 
+  login = async () => { 
     try {
-      const dataPatient = await fetch(`http://192.168.88.14:2000/patient`, {
-        method: 'POST',
-        // headers: {
-        //   "Accept": 'application/json',
-        //   'Content-Type': 'application/json',
-        // },
-        body: JSON.stringify({
-          patient_name: this.state.name, 
-          sex: this.state.sex,
+      const fetchPoli = await fetch(`http://localhost:1000/create_patient`, {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `patient_name=${this.state.name}&sex=${this.state.sex}`,
         })
-      });
-
-      const fetchPoli =  await fetch('http://192.168.88.14:2000/poli', {
-            method: 'GET'
-        })
-        // .then((response) => response.json())
-        // .then((responseJson) => {
-        //     console.log(responseJson);
-        //     // this.setState({
-        //     //   data: responseJson
-        //     // })
-        // })
-        .catch((error) => {
-            console.error(error);
-      });
-      const poli = fetchPoli.json();
-      // this.setState({ dataPatient : patientJson })
-      // .then( (response) => {response.json} )
-      // .then((responseJson) => {
-      //   console.log(responseJson);
-      //   this.setState({ dataPatient : responseJson })
-      // })
-      // .catch((error) => {
-      //   console.error(error);
-      // });
-      console.log(poli.body);
-      alert(poli.body);
-
-    //   fetch(`http://localhost:1000/create_patient`, {
-    //   method: 'POST',
-    //   // headers: {
-    //   //   "Accept": 'application/json',
-    //   //   'Content-Type': 'application/json',
-    //   // },
-    //   body: JSON.stringify({
-    //     patient_name: this.state.name, 
-    //     sex: this.state.sex,
-    //   })
-    // });
     } catch (err){
       alert("err", err)
     }
-    
-
-    // console.log(this.state.dataPatient);
-    // alert(`Success\nname: ${dataPatient.data.patient_name} \n sex: ${dataPatient.data.sex}`)
-    // alert("success")
-
   }
   render() {
     return (
